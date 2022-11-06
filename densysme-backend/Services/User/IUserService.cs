@@ -5,7 +5,7 @@ namespace Services.User;
 
 public interface IUserService
 {
-    Task<Guid> Register(string password, IReadOnlyCollection<string> authRoles, CancellationToken cancellationToken);
-    Task<Guid> Register(string password, IReadOnlyCollection<AuthRole> authRoles, CancellationToken cancellationToken);
-    Task<AuthResultDto> Authenticate<T>(LoginDto loginData) where T : Individual;
+    Task<Guid> RegisterAsync(string password, IReadOnlyCollection<string> authRoles, CancellationToken cancellationToken = default);
+    Task<Guid> RegisterAsync(string password, IReadOnlyCollection<AuthRole> authRoles, CancellationToken cancellationToken = default);
+    Task<AuthResultDto> AuthenticateAsync<T>(LoginDto loginData) where T : Individual;
 }

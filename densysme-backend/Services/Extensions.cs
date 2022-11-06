@@ -1,6 +1,6 @@
 namespace Services;
 
-public static class EnumerableExtensions
+public static class Extensions
 {
     public static void AddElement<TKey, T>(this IDictionary<TKey, IEnumerable<T>> source, TKey key, T element)
     {

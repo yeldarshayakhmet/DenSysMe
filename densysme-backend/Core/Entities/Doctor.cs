@@ -1,5 +1,3 @@
-using Core.Enums;
-
 namespace Core.Entities;
 
 public class Doctor : Employee
