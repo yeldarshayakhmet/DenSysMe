@@ -42,7 +42,7 @@ public class DoctorService : IDoctorService
 
         dbDoctor = _unitOfWork.Create(dbDoctor);
         await _unitOfWork.SaveAsync(cancellationToken);
-        var userId = await _userService.RegisterAsync(doctor.Password, new[] { AuthRoleConstants.Doctor }, cancellationToken);
+        var userId = await _userService.RegisterAsync(doctor.Password, new List<string> { AuthRoleConstants.Doctor }, cancellationToken);
         dbDoctor.UserId = userId;
         await _unitOfWork.SaveAsync(cancellationToken);
         return dbDoctor.Id;

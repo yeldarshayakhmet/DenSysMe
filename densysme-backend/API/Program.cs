@@ -5,6 +5,8 @@ using DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Services;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,20 +14,29 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection(nameof(JwtConfig)));
 builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.RegisterServiceLayer();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             IssuerSigningKey =
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.Get<JwtConfig>().Secret)),
+                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection($"{nameof(JwtConfig)}:{nameof(JwtConfig.Secret)}").Value)),
             ValidateIssuerSigningKey = true,
             ValidateLifetime = true,
+            ValidateAudience = false,
+            ValidateIssuer = false
         };
     });
+builder.Services.AddAuthorization();
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("JWT Bearer", new OpenApiSecurityScheme
@@ -34,8 +45,12 @@ builder.Services.AddSwaggerGen(options =>
         Description = "JWT Authorization using Bearer scheme: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
+        Scheme = "Bearer"
     });
+    
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+
 
 var app = builder.Build();
 
@@ -47,6 +62,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthentication();
 

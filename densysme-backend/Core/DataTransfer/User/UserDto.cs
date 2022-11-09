@@ -13,14 +13,14 @@ public record UserDto(
     byte[]? PasswordSalt,
     NameDtoInt[]? Roles)
 {
-    public UserDto(Individual employee) : this(
-        employee.IIN,
-        employee.FirstName,
-        employee.LastName,
-        employee.Email,
-        employee.PhoneNumber,
-        employee.UserId.HasValue ? employee.User!.Id : null,
-        employee.UserId.HasValue ? employee.User!.PasswordHash : null,
-        employee.UserId.HasValue ? employee.User!.PasswordSalt : null,
-        employee.UserId.HasValue ? employee.User?.AuthRoles.Select(role => new NameDtoInt(role.Id, role.Name)).ToArray() : null) {}
+    public UserDto(Individual person) : this(
+        person.IIN,
+        person.FirstName,
+        person.LastName,
+        person.Email,
+        person.PhoneNumber,
+        person.UserId.HasValue ? person.User!.Id : null,
+        person.UserId.HasValue ? person.User!.PasswordHash : null,
+        person.UserId.HasValue ? person.User!.PasswordSalt : null,
+        person.UserId.HasValue ? person.User?.AuthRoles?.Select(role => new NameDtoInt(role.Id, role.Name)).ToArray() : null) {}
 };

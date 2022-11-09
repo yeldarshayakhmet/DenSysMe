@@ -1,5 +1,4 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -25,19 +24,19 @@ public class UserService : IUserService
         _tokenConfig = tokenConfig.Value;
     }
 
-    public async Task<Guid> RegisterAsync(string password, IReadOnlyCollection<string> authRoles, CancellationToken cancellationToken = default)
+    public async Task<Guid> RegisterAsync(string password, IEnumerable<string> authRoles, CancellationToken cancellationToken = default)
     {
         var dbRoles = await _unitOfWork.Collection<AuthRole>()
             .Where(role => authRoles.Contains(role.Name))
             .ToListAsync(cancellationToken);
         
-        if (authRoles.Count == dbRoles.Count)
+        if (authRoles.Count() == dbRoles.Count)
             return await RegisterAsync(password, dbRoles, cancellationToken);
         
         throw new ApplicationException("Invalid authorization roles set upon creating a user");
     }
 
-    public async Task<Guid> RegisterAsync(string password, IReadOnlyCollection<AuthRole> authRoles, CancellationToken cancellationToken = default)
+    public async Task<Guid> RegisterAsync(string password, IEnumerable<AuthRole> authRoles, CancellationToken cancellationToken = default)
     {
         var user = new Core.Entities.User();
         CreateEncryptedPassword(password, out var hash, out var salt);
@@ -51,13 +50,18 @@ public class UserService : IUserService
 
     public async Task<AuthResultDto> AuthenticateAsync<T>(LoginDto loginData) where T : Individual
     {
-        Expression<Func<UserDto, bool>> userFilter = person => person.IIN == loginData.IIN && person.UserId.HasValue;
-        var user = typeof(T) == typeof(Patient)
-            ? await _unitOfWork.Collection<Patient>()
-                .Select(patient => new UserDto(patient))
-                .AsNoTracking()
-                .FirstOrDefaultAsync(userFilter)
-            : await GetEmployeeByFilter(userFilter);
+        UserDto? user;
+        if (typeof(T) == typeof(Patient))
+        {
+            var patient = await _unitOfWork.Collection<Patient>()
+                .Include(patient => patient.User).ThenInclude(u => u!.AuthRoles)
+                .FirstOrDefaultAsync(patient => patient.IIN == loginData.IIN && patient.UserId.HasValue);
+            user = patient is not null ? new UserDto(patient) : null;
+        }
+        else
+        {
+            user = await GetEmployeeByIIN(loginData.IIN);
+        }
         
         if (user is null)
             return new AuthResultDto(false, "Invalid username or password");
@@ -104,16 +108,29 @@ public class UserService : IUserService
         claims.AddRange(user.Roles!.Select(role => new Claim(ClaimTypes.Role, role.Name)));
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenConfig.Secret));
-        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
         var token = new JwtSecurityToken(claims: claims, expires: DateTime.UtcNow.AddMinutes(expirationInMinutes), signingCredentials: credentials);
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    private async Task<UserDto?> GetEmployeeByFilter(Expression<Func<UserDto, bool>> filter) => await _unitOfWork
-        .Collection<Core.Entities.Doctor>()
-        .Select(doctor => new UserDto(doctor))
-        .Concat(_unitOfWork
+    private async Task<UserDto?> GetEmployeeByIIN(string iin)
+    {
+        var doctors = await _unitOfWork
+            .Collection<Core.Entities.Doctor>()
+            .Include(doctor => doctor.User)
+            .ThenInclude(user => user!.AuthRoles)
+            .Where(doctor => doctor.IIN == iin && doctor.UserId.HasValue)
+            .ToListAsync();
+        var managers = await _unitOfWork
             .Collection<Manager>()
-            .Select(manager => new UserDto(manager)))
-        .FirstOrDefaultAsync(filter);
+            .Include(manager => manager.User)
+            .ThenInclude(user => user!.AuthRoles)
+            .Where(manager => manager.IIN == iin && manager.UserId.HasValue)
+            .ToListAsync();
+
+        return doctors
+            .Select(doctor => new UserDto(doctor))
+            .Concat(managers.Select(manager => new UserDto(manager)))
+            .SingleOrDefault();
+    }
 }
