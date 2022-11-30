@@ -154,7 +154,14 @@ h1, h2, h3{
 
 /* header */
 .header{
-    min-height: 100vh;
+    min-height: 6vh;
+}
+
+.header-logo {
+    max-width: 40%;
+}
+.myimage {
+    padding-bottom: 200px ;
 }
 .navbar{
     position: fixed;
