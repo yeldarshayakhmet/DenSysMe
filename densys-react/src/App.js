@@ -7,12 +7,16 @@ import Dashboard from './Dashboard';
 import Home from './Home';
 import Doctor from './components/Doctor/Doctor';
 import Patient from './components/Patient/Patient';
-import Request from './components/Patient/Request';
-
+import Request from './Request';
+import AddPatient from './components/Patient/AddPatient';
+import EditPatient from './components/Patient/EditPatient';
+import AddDoctor from './components/Doctor/AddDoctor';
+import EditDoctor from './components/Doctor/EditDoctor';
 
 import PrivateRoute from './Utils/PrivateRoute';
 import PublicRoute from './Utils/PublicRoute';
 import { getToken, removeUserSession, setUserSession } from './Utils/Common';
+
 
 function App() {
   const [authLoading, setAuthLoading] = useState(true);
@@ -56,6 +60,12 @@ function App() {
               <Route exact path="/doctor" component={Doctor} />
               <Route exact path="/patient" component={Patient} />
               <Route exact path="/request" component={Request} />
+              <Route exact path="/addpatient" component={AddPatient} />
+              <Route exact path="/editpatient/:iin" component={EditPatient} />
+              <Route exact path="/adddoctor" component={AddDoctor} />
+              <Route exact path="/editdoctor/:iin" component={EditDoctor} />
+              <Route exact path="/request" component={Request} />
+
             </Switch>
           </div>
         </div>

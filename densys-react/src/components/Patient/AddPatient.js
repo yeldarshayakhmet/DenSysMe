@@ -1,80 +1,43 @@
 
 import React from 'react';
+import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import {Link} from 'react-router-dom';
+
 
 function AddPatient() {
   return (
-    <div>
-       Welcome to the AddPatient Page!
-    <div class="wrapper">
-    <div class="registration_form">
-      <div class="title">
-        Registration Form
-      </div>
-
-      <form>
-        <div class="form_wrap">
-          <div class="input_grp">
-            <div class="input_wrap">
-              <label for="fname">First Name</label>
-                <input type="text" id="fname"/>
-
-            </div>
-            <div class="input_wrap">
-              <label for="lname">Last Name</label>
-                <input type="text" id="lname"/>
-            </div>
-          </div>
-          <div class="input_wrap">
-            <label for="email">Email Address</label>
-              <input type="text" id="email"/>
-          </div>
-
-          <div class="input_wrap">
-            <label for="city">City</label>
-            <input type="text" id="city"/>
-            
-          </div>
-          <div class="input_wrap">
-            <label for="country">Country</label>
-            <input type="text" id="country"/>
-          </div>
-
-          <div class="input_wrap">
-            <label>Gender</label>
-            <ul>
-              <li>
-                <label class="radio_wrap">
-                  <input type="radio" name="gender" value="male" class="input_radio" checked/>
-                  <span>Male</span>
-                </label>
-              </li>
-              <li>
-                <label class="radio_wrap">
-                  <input type="radio" name="gender" value="female" class="input_radio"/>
-                  <span>Female</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-
-
-
-          <div class="input_wrap">
-            <input type="submit" value="Register Now" class="submit_btn"/>
-          </div>
-
-
-
-        </div>
-
-
-
-
-
-      </form>
-    </div>
-  </div>
-  </div>
+   <Form >
+    <FormGroup>
+      <Label>Date of Birth</Label>
+      <Input type="date" placeholder='Date of birth'></Input>
+      <Label>INN</Label>
+      <Input type="text" placeholder='INN'></Input>
+      <Label>ID number</Label>
+      <Input type="text" placeholder='IDnumber'></Input>
+      <Label>Name</Label>
+      <Input type="text" placeholder='Name'></Input>
+      <Label>Surname</Label>
+      <Input type="text" placeholder='Surname'></Input>
+      <Label>Blood group</Label>
+      <Input type="text" placeholder='Blood type: A, B , AB, O '></Input>
+      <Label>Emergency contact number </Label>
+      <Input type="number" placeholder='without +'></Input>
+      <Label>Contact numbet</Label>
+      <Input type="number" placeholder='without +'></Input>
+      <Label>Email</Label>
+      <Input type="email" placeholder='email'></Input>
+      <Label>Address</Label>
+      <Input type="text" placeholder='Address'></Input>
+      <Label>Martial Status</Label>
+      <Input type="text" placeholder=' married, divorced,  widowed, single'></Input>
+      <Label>Registration Date</Label>
+      <Input type="date" placeholder='date'></Input>
+      <Label>Details</Label>
+      <Input type="text" placeholder='any details about patient'></Input>
+    </FormGroup>
+    <Button type="submit"> Submit</Button>
+    <Link to ="/" className='btn btn-danger'>Cancel</Link>
+   </Form>
   );
 }
 

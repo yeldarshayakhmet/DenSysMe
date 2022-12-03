@@ -45,12 +45,7 @@ text .log {
   color: #751f1f;
 }
 
-.wrapper{
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .registration_form{
   background: white;
@@ -166,4 +161,18 @@ text .log {
 
 .form_wrap .submit_btn:hover{
   background: #051c94;
+}
+
+.search{
+  padding: 5px;
+  font-size: 15px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  width:150px; 
+}
+
+.list{
+  text-align: center;
+  display: block;
 }

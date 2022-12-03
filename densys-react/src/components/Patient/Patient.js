@@ -1,80 +1,73 @@
-import React from 'react';
 
-function Patient() {
+import React, { useState, useEffect} from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import {Link} from 'react-router-dom';
+
+import {Button} from 'reactstrap'
+
+const Patient = () => {
+  const [docdata, docdatachange] = useState(null);
+
+  useEffect(() => {
+      fetch("http://localhost:3000/patients").then((res) => {
+          return res.json();
+      }).then((resp) => {
+          docdatachange(resp);
+      }).catch((err) => {
+          console.log(err.message);
+      })
+  }, [])
   return (
-    <div>
-       Welcome to the AddPatient Page!
-    <div class="wrapper">
-    <div class="registration_form">
-      <div class="title">
-        Registration Form
+      <div>
+      <div className="container">
+          <div className="card">
+              <div className="card-title">
+                  <h2>Patient Listing</h2>
+              </div>
+              <div className="card-body">
+                  <div className="divbtn">
+                  <Link to = "/adddoctor" className="btn btn-primary"> Add new Patient (+)</Link>
+                  </div>
+                  <table className="table table-bordered">
+                      <thead className="bg-dark text-white">
+                          <tr>
+                              <td>INN</td>
+                              <td>Name</td>
+                              <td>Surname</td>
+                              <td>Email</td>
+                              <td>Phone</td>
+                              <td>Action</td>
+                          </tr>
+                      </thead>
+                      <tbody>
+
+                          {docdata &&
+                              docdata.map(item => (
+                                  <tr key={item.inn}>
+                                      <td>{item.inn}</td>
+                                      <td>{item.name}</td>
+                                      <td>{item.surname}</td>
+                                      <td>{item.email}</td>
+                                      <td>{item.phone}</td>
+                                      <td>
+                               </td>
+                                      
+                                  </tr>
+                              ))
+                          }
+                      </tbody>
+
+                  </table>
+              </div>
+          </div>
       </div>
-
-      <form>
-        <div class="form_wrap">
-          <div class="input_grp">
-            <div class="input_wrap">
-              <label for="fname">First Name</label>
-                <input type="text" id="fname"/>
-
-            </div>
-            <div class="input_wrap">
-              <label for="lname">Last Name</label>
-                <input type="text" id="lname"/>
-            </div>
-          </div>
-          <div class="input_wrap">
-            <label for="email">Email Address</label>
-              <input type="text" id="email"/>
-          </div>
-
-          <div class="input_wrap">
-            <label for="city">City</label>
-            <input type="text" id="city"/>
-            
-          </div>
-          <div class="input_wrap">
-            <label for="country">Country</label>
-            <input type="text" id="country"/>
-          </div>
-
-          <div class="input_wrap">
-            <label>Gender</label>
-            <ul>
-              <li>
-                <label class="radio_wrap">
-                  <input type="radio" name="gender" value="male" class="input_radio" checked/>
-                  <span>Male</span>
-                </label>
-              </li>
-              <li>
-                <label class="radio_wrap">
-                  <input type="radio" name="gender" value="female" class="input_radio"/>
-                  <span>Female</span>
-                </label>
-              </li>
-            </ul>
-          </div>
-
-
-
-          <div class="input_wrap">
-            <input type="submit" value="Register Now" class="submit_btn"/>
-          </div>
-
-
-
-        </div>
-
-
-
-
-
-      </form>
-    </div>
+      <Link to = "/editpatient/1" className="btn btn-warning"> Edit</Link>
+      <Button color='danger'>Delete</Button>
+    
   </div>
-  </div>
-  );
+  
+);
 }
 
 export default Patient;
+

@@ -3,7 +3,7 @@ import React from 'react';
 function EditDoctor() {
   return (
     <div>
-      Welcome to the AEditDoctor Page!
+      Welcome to the EditDoctor Page!
     </div>
   );
 }

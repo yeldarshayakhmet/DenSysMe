@@ -1,0 +1,111 @@
+{
+    "patients": [
+        {
+            "bdate": "9",
+            "iin": "9",
+            "id": "9",
+            "name": "9",
+            "surname": "9",
+            "middlename": "9",
+            "bloodgroup": "9",
+            "emergencycontnumber": "9",
+            "email": "9",
+            "address": "9",
+            "martialstatus": "9",
+            "registrationdate": "9",
+            "details": "9"
+        },
+        {
+            "bdate": "8",
+            "iin": "8",
+            "id" : "8",
+            "name": "8",
+            "surname": "8",
+            "middlename": "8",
+            "bloodgroup": "8",
+            "emergencycontnumber": "8",
+            " email": "8",
+            "address": "8",
+            "martialstatus": "8",
+            "registrationdate": "8",
+            "details": "8"
+        },{
+            "bdate": "7",
+            "iin": "7",
+            "id": "7",
+            "name": "7",
+            "surname": "7",
+            "middlename": "7",
+            "bloodgroup": "7",
+            "emergencycontnumber": "7",
+            "email": "7",
+            "address": "7",
+            "martialstatus": "7",
+            "registrationdate": "7",
+            "details": "7"
+        }
+        
+        ],
+    "doctors": [
+        {
+            "bdate" : "1",
+            "iin": "1",
+            "id": "1",
+            "name": "1",
+            "surname": "1",
+            "middlename": "1",
+            "contnumber": "1",
+            "deptid": "1",
+            "specid": "1",
+            "experienceyear": "1",
+            "photo": "1",
+            "category": "1",
+            "priceofappointment": "1",
+            "scheduledetails": "1",
+            "degree": "1",
+            "rating": "1",
+            "address": "1",
+            "homepageurl": "1"
+        
+        },{
+            "bdate" : "2",
+            "iin": "2",
+            "id": "2",
+            "name": "2",
+            "surname": "2",
+            "middlename": "2",
+            "contnumber": "2",
+            "deptid": "2",
+            "specid": "2",
+            "experienceyear": "2",
+            "photo": "2",
+            "category": "2",
+            "priceofappointment": "2",
+            "scheduledetails": "2",
+            "degree": "2",
+            "rating": "2",
+            "address": "2",
+            "homepageurl": "2"
+        
+        },{
+            "bdate" : "3",
+            "iin": "3",
+            "id": "3",
+            "name": "3",
+            "surname": "3",
+            "middlename": "3",
+            "contnumber": "3",
+            "deptid": "3",
+            "specid": "3",
+            "experienceyear": "3",
+            "photo": "3",
+            "category": "3",
+            "priceofappointment": "3",
+            "scheduledetails": "3",
+            "degree": "3",
+            "rating": "3",
+            "address": "3",
+            "homepageurl": "3"
+        }
+        ]
+}
