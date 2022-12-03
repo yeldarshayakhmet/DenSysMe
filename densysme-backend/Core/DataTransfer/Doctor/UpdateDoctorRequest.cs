@@ -1,8 +1,10 @@
 using Core.Enums;
+using Microsoft.AspNetCore.Http;
 
-namespace API.Models;
+namespace Core.DataTransfer.Doctor;
 
-public record AddDoctorRequest(
+public record UpdateDoctorRequest(
+    Guid Id,
     string FirstName,
     string MiddleName,
     string LastName,
@@ -14,5 +16,6 @@ public record AddDoctorRequest(
     int YearsOfExperience,
     MedicalCategory Category,
     decimal AppointmentPrice,
+    AcademicDegree Degree,
     Guid SpecializationId,
-    AcademicDegree Degree);
+    IFormFile? Photo);

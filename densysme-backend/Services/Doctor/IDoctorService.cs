@@ -4,6 +4,7 @@ namespace Services.Doctor;
 
 public interface IDoctorService
 {
-    Task<Guid> AddDoctorAsync(AddDoctorDto doctor, CancellationToken cancellationToken = default);
+    Task<Guid> AddDoctorAsync(AddDoctorRequest doctor, CancellationToken cancellationToken = default);
+    Task UpdateDoctorAsync(UpdateDoctorRequest request, CancellationToken cancellationToken = default);
     Task<DoctorDto[]> GetDoctorsAsync(CancellationToken cancellationToken = default);
 }

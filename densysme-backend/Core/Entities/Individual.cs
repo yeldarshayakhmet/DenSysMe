@@ -10,7 +10,7 @@ public abstract class Individual
     public string Email { get; set; } = string.Empty;
     public string PhoneNumber { get; set; } = string.Empty;
     public string Address { get; set; } = string.Empty;
-    public DateOnly DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; }
     public Guid? UserId { get; set; }
     public User? User { get; set; }
 }

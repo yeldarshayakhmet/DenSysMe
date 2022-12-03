@@ -1,8 +1,9 @@
 using System.Text.Json;
-using API.Models;
+using Core.Constants;
 using Core.DataTransfer.Doctor;
 using Services.Doctor;
 using static API.Endpoints.RouteConstants;
+using AddDoctorRequest = Core.DataTransfer.Doctor.AddDoctorRequest;
 
 namespace API.Endpoints;
 
@@ -10,7 +11,8 @@ public static class DoctorEndpoints
 {
     public static WebApplication MapDoctorEndpoints(this WebApplication app)
     {
-        app.MapPost($"{Api}/{Doctors}", HandleAddDoctor).AllowAnonymous();
+        app.MapPost($"{Api}/{Doctors}", HandleAddDoctor).RequireAuthorization(new AuthorizeData(roles: AuthRoleConstants.Admin));
+        app.MapPut($"{Api}/{Doctors}", HandleUpdateDoctor).RequireAuthorization(new AuthorizeData(roles: AuthRoleConstants.Admin));
         app.MapGet($"{Api}/{Doctors}", HandleGetDoctors)
             .Produces<DoctorDto[]>()
             .RequireAuthorization();
@@ -19,18 +21,18 @@ public static class DoctorEndpoints
 
     public static async Task<IResult> HandleAddDoctor(
         IDoctorService doctorService,
-        HttpContext httpContext)
+        IHttpContextAccessor httpContext)
     {
-        var photo = httpContext.Request.Form.Files.SingleOrDefault();
-        var request = JsonSerializer.Deserialize<AddDoctorRequest>(
-            httpContext.Request.Form["request"].Single(),
+        var photo = httpContext.HttpContext!.Request.Form.Files.SingleOrDefault();
+        var request = JsonSerializer.Deserialize<Models.AddDoctorRequest>(
+            httpContext.HttpContext.Request.Form["request"].Single(),
             new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
         if (request is null)
             return Results.BadRequest();
-        var doctorData = new AddDoctorDto(
+        var doctorData = new AddDoctorRequest(
             request.FirstName,
             request.MiddleName,
             request.LastName,
@@ -43,12 +45,46 @@ public static class DoctorEndpoints
             request.Category,
             request.AppointmentPrice,
             request.Degree,
-            photo,
-            request.Password);
+            request.SpecializationId,
+            photo);
         
         var doctorId = await doctorService.AddDoctorAsync(doctorData);
 
-        return Results.Accepted(value: doctorId);
+        return Results.Created($"{Api}/{Doctors}", doctorId);
+    }
+
+    public static async Task<IResult> HandleUpdateDoctor(
+        IDoctorService doctorService,
+        IHttpContextAccessor httpContext)
+    {
+        var photo = httpContext.HttpContext!.Request.Form.Files.SingleOrDefault();
+        var request = JsonSerializer.Deserialize<Models.UpdateDoctorRequest>(
+            httpContext.HttpContext.Request.Form["request"].Single(),
+            new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+        if (request is null)
+            return Results.BadRequest();
+        var doctorData = new UpdateDoctorRequest(
+            request.Id,
+            request.FirstName,
+            request.MiddleName,
+            request.LastName,
+            request.IIN,
+            request.Phone,
+            request.Email,
+            request.Address,
+            request.DateOfBirth,
+            request.YearsOfExperience,
+            request.Category,
+            request.AppointmentPrice,
+            request.Degree,
+            request.SpecializationId,
+            photo);
+
+        await doctorService.UpdateDoctorAsync(doctorData);
+        return Results.Accepted();
     }
 
     public static async Task<IResult> HandleGetDoctors(IDoctorService doctorService)

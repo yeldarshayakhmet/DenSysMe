@@ -36,5 +36,7 @@ public class EntityFrameworkUnitOfWork : DbContext, IUnitOfWork
         new ManagerConfiguration().Configure(modelBuilder.Entity<Manager>());
         new UserConfiguration().Configure(modelBuilder.Entity<User>());
         new PatientConfiguration().Configure(modelBuilder.Entity<Patient>());
+        new SpecializationConfiguration().Configure(modelBuilder.Entity<Specialization>());
+        new AppointmentConfiguration().Configure(modelBuilder.Entity<Appointment>());
     }
 }

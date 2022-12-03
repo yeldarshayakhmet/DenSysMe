@@ -39,7 +39,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("JWT Bearer", new OpenApiSecurityScheme
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Type = SecuritySchemeType.ApiKey,
         Description = "JWT Authorization using Bearer scheme: Bearer {token}",
@@ -48,9 +48,28 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer"
     });
     
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
+
+            },
+            new List<string>()
+        }
+    });
+    
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

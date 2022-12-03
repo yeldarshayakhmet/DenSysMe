@@ -1,28 +1,20 @@
-using Core.Constants;
 using Core.DataTransfer.Doctor;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Services.User;
 
 namespace Services.Doctor;
 
 public class DoctorService : IDoctorService
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IUserService _userService;
 
-    public DoctorService(IUnitOfWork unitOfWork, IUserService userService)
+    public DoctorService(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
-        _userService = userService;
     }
 
-    public async Task<Guid> AddDoctorAsync(AddDoctorDto doctor, CancellationToken cancellationToken = default)
+    public async Task<Guid> AddDoctorAsync(AddDoctorRequest doctor, CancellationToken cancellationToken = default)
     {
-        using var imageStream = new MemoryStream();
-        if (doctor.Photo is not null)
-            await doctor.Photo.CopyToAsync(imageStream, cancellationToken);
-
         var dbDoctor = new Core.Entities.Doctor
         {
             Id = default,
@@ -33,19 +25,39 @@ public class DoctorService : IDoctorService
             Email = doctor.Email,
             PhoneNumber = doctor.Phone,
             Address = doctor.Address,
-            DateOfBirth = DateOnly.FromDateTime(doctor.DateOfBirth),
-            Photo = imageStream.Length > 0 ? imageStream.ToArray() : null,
+            DateOfBirth = doctor.DateOfBirth,
+            Photo = doctor.Photo is not null ? await Helpers.GetFileBytes(doctor.Photo, cancellationToken) : null,
             YearsOfExperience = doctor.YearsOfExperience,
             Degree = doctor.Degree,
-            AppointmentPrice = doctor.AppointmentPrice
+            Category = doctor.Category,
+            AppointmentPrice = doctor.AppointmentPrice,
+            SpecializationId = doctor.SpecializationId
         };
 
         dbDoctor = _unitOfWork.Create(dbDoctor);
         await _unitOfWork.SaveAsync(cancellationToken);
-        var userId = await _userService.RegisterAsync(doctor.Password, new List<string> { AuthRoleConstants.Doctor }, cancellationToken);
-        dbDoctor.UserId = userId;
-        await _unitOfWork.SaveAsync(cancellationToken);
         return dbDoctor.Id;
+    }
+
+    public async Task UpdateDoctorAsync(UpdateDoctorRequest request, CancellationToken cancellationToken = default)
+    {
+        var doctor = await _unitOfWork.Collection<Core.Entities.Doctor>().SingleAsync(doctor => doctor.Id == request.Id, cancellationToken);
+        doctor.FirstName = request.FirstName;
+        doctor.MiddleName = request.MiddleName;
+        doctor.LastName = request.LastName;
+        doctor.IIN = request.IIN;
+        doctor.Email = request.Email;
+        doctor.PhoneNumber = request.Phone;
+        doctor.Address = request.Address;
+        doctor.DateOfBirth = request.DateOfBirth;
+        doctor.Photo = request.Photo is not null ? await Helpers.GetFileBytes(request.Photo, cancellationToken) : null;
+        doctor.YearsOfExperience = request.YearsOfExperience;
+        doctor.Degree = request.Degree;
+        doctor.Category = request.Category;
+        doctor.AppointmentPrice = request.AppointmentPrice;
+        doctor.SpecializationId = request.SpecializationId;
+
+        await _unitOfWork.SaveAsync(cancellationToken);
     }
 
     public async Task<DoctorDto[]> GetDoctorsAsync(CancellationToken cancellationToken = default) => await _unitOfWork

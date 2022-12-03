@@ -1,8 +1,9 @@
 using Core.Enums;
+using Microsoft.AspNetCore.Http;
 
-namespace API.Models;
+namespace Core.DataTransfer.Manager;
 
-public record AddDoctorRequest(
+public record AddManagerRequest(
     string FirstName,
     string MiddleName,
     string LastName,
@@ -12,7 +13,5 @@ public record AddDoctorRequest(
     string Address,
     DateTime DateOfBirth,
     int YearsOfExperience,
-    MedicalCategory Category,
-    decimal AppointmentPrice,
-    Guid SpecializationId,
-    AcademicDegree Degree);
+    AcademicDegree Degree,
+    IFormFile? Photo);

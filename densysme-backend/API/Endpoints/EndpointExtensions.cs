@@ -6,6 +6,9 @@ public static class EndpointExtensions
     {
         app.MapUserEndpoints();
         app.MapDoctorEndpoints();
+        app.MapAdministrationEndpoints();
+        app.MapPatientEndpoints();
+        app.MapAppointmentEndpoints();
         return app;
     }
 }

@@ -51,9 +51,9 @@ public class UserService : IUserService
     public async Task<AuthResultDto> AuthenticateAsync<T>(LoginDto loginData) where T : Individual
     {
         UserDto? user;
-        if (typeof(T) == typeof(Patient))
+        if (typeof(T) == typeof(Core.Entities.Patient))
         {
-            var patient = await _unitOfWork.Collection<Patient>()
+            var patient = await _unitOfWork.Collection<Core.Entities.Patient>()
                 .Include(patient => patient.User).ThenInclude(u => u!.AuthRoles)
                 .FirstOrDefaultAsync(patient => patient.IIN == loginData.IIN && patient.UserId.HasValue);
             user = patient is not null ? new UserDto(patient) : null;
