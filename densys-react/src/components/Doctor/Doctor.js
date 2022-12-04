@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Link} from 'react-router-dom';
 import {Button} from 'reactstrap'
+import {getToken} from "../../Utils/Common";
 
 const Doctor = () => {
     const [docdata, docdatachange] = useState(null);
@@ -10,7 +11,11 @@ const Doctor = () => {
    
 
     useEffect(() => {
-        fetch("http://localhost:3000/doctors").then((res) => {
+        fetch("http://localhost:5001/api/employees/doctors", {
+            headers: {
+                'Authorization': 'Bearer ' + getToken()
+            }
+        }).then((res) => {
             return res.json();
         }).then((resp) => {
             docdatachange(resp);
@@ -32,10 +37,10 @@ const Doctor = () => {
                     <table className="table table-bordered">
                         <thead className="bg-dark text-white">
                             <tr>
-                                <td>INN</td>
+                                <td>IIN</td>
                                 <td>Name</td>
                                 <td>Surname</td>
-                                <td>Department ID</td>
+                                <td>Email</td>
                                 <td>Phone</td>
                                 <td>Action</td>
                             </tr>
@@ -44,12 +49,12 @@ const Doctor = () => {
 
                             {docdata &&
                                 docdata.map(item => (
-                                    <tr key={item.inn}>
-                                        <td>{item.inn}</td>
-                                        <td>{item.name}</td>
-                                        <td>{item.surname}</td>
-                                        <td>{item.deptid}</td>
-                                        <td>{item.phone}</td>
+                                    <tr key={item.iin}>
+                                        <td>{item.iin}</td>
+                                        <td>{item.firstName}</td>
+                                        <td>{item.lastName}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.phoneNumber}</td>
                                         <td>
                                  </td>
                                         

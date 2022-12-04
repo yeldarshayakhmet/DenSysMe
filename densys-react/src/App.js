@@ -19,7 +19,7 @@ import { getToken, removeUserSession, setUserSession } from './Utils/Common';
 
 
 function App() {
-  const [authLoading, setAuthLoading] = useState(true);
+/*  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const token = getToken();
@@ -39,7 +39,7 @@ function App() {
   if (authLoading && getToken()) {
     return <div className="content">Checking Authentication...</div>
   }
-
+*/
   return (
     <div className="App">
       <BrowserRouter>

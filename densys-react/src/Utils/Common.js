@@ -1,4 +1,6 @@
 // return the user data from the session storage
+import {useState} from "react";
+
 export const getUser = () => {
   const userStr = sessionStorage.getItem('user');
   if (userStr) return JSON.parse(userStr);
@@ -20,4 +22,16 @@ export const removeUserSession = () => {
 export const setUserSession = (token, user) => {
   sessionStorage.setItem('token', token);
   sessionStorage.setItem('user', JSON.stringify(user));
+}
+
+export const useFormInput = initialValue => {
+  const [value, setValue] = useState(initialValue);
+
+  const handleChange = e => {
+    setValue(e.target.value);
+  }
+  return {
+    value,
+    onChange: handleChange
+  }
 }

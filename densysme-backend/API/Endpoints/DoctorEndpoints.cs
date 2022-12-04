@@ -1,6 +1,8 @@
 using System.Text.Json;
 using Core.Constants;
 using Core.DataTransfer.Doctor;
+using Core.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Services.Doctor;
 using static API.Endpoints.RouteConstants;
 using AddDoctorRequest = Core.DataTransfer.Doctor.AddDoctorRequest;
@@ -14,7 +16,7 @@ public static class DoctorEndpoints
         app.MapPost($"{Api}/{Doctors}", HandleAddDoctor).RequireAuthorization(new AuthorizeData(roles: AuthRoleConstants.Admin));
         app.MapPut($"{Api}/{Doctors}", HandleUpdateDoctor).RequireAuthorization(new AuthorizeData(roles: AuthRoleConstants.Admin));
         app.MapGet($"{Api}/{Doctors}", HandleGetDoctors)
-            .Produces<DoctorDto[]>()
+            .Produces<Doctor[]>()
             .RequireAuthorization();
         return app;
     }
@@ -87,9 +89,9 @@ public static class DoctorEndpoints
         return Results.Accepted();
     }
 
-    public static async Task<IResult> HandleGetDoctors(IDoctorService doctorService)
+    public static async Task<IResult> HandleGetDoctors(IDoctorService doctorService, string? search = null, [FromBody] Guid[]? specializations = null)
     {
-        var doctors = await doctorService.GetDoctorsAsync();
+        var doctors = await doctorService.GetDoctorsAsync(search, specializations);
         return Results.Ok(doctors);
     }
 }

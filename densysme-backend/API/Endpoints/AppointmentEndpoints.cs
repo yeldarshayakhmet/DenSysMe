@@ -13,10 +13,12 @@ public static class AppointmentEndpoints
         app.MapDelete($"{Api}/appointments", HandleDeleteAppointment).RequireAuthorization();
         app.MapGet($"{Api}/doctors/appointments",
             async (IAppointmentService appointmentService, Guid doctorId) =>
-                await appointmentService.GetAppointmentsByDoctor(doctorId));
+                await appointmentService.GetAppointmentsByDoctor(doctorId))
+            .RequireAuthorization();
         app.MapGet($"{Api}/patients/appointments",
             async (IAppointmentService appointmentService, Guid patientId) =>
-                await appointmentService.GetAppointmentsByPatient(patientId));
+                await appointmentService.GetAppointmentsByPatient(patientId))
+            .RequireAuthorization();
         return app;
     }
 

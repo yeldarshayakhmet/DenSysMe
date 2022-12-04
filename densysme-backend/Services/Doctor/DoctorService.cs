@@ -60,8 +60,16 @@ public class DoctorService : IDoctorService
         await _unitOfWork.SaveAsync(cancellationToken);
     }
 
-    public async Task<DoctorDto[]> GetDoctorsAsync(CancellationToken cancellationToken = default) => await _unitOfWork
+    public async Task<Core.Entities.Doctor[]> GetDoctorsAsync(string? search, Guid[]? specializations, CancellationToken cancellationToken = default) => await _unitOfWork
         .Collection<Core.Entities.Doctor>()
-        .Select(doctor => new DoctorDto(doctor.FirstName, doctor.LastName, doctor.PhoneNumber, doctor.Photo))
+        .Include(doctor => doctor.Specialization)
+        .AsNoTracking()
+        .Where(doctor => string.IsNullOrWhiteSpace(search)
+            && (EF.Functions.Like(doctor.FirstName, $"%{search}%")
+                || EF.Functions.Like(doctor.LastName, $"%{search}%")))
+        .Where(doctor =>
+            specializations == null
+            || !specializations.Any()
+            || doctor.SpecializationId.HasValue && specializations.Contains(doctor.SpecializationId.Value))
         .ToArrayAsync(cancellationToken);
 }

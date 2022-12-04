@@ -1,49 +1,61 @@
-
 import React from 'react';
 import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import {getToken, useFormInput} from "../../Utils/Common";
+import axios from "axios";
 
 
 function AddDoctor() {
+  const dateOfBirth = useFormInput('');
+  const iin = useFormInput('');
+  const firstName = useFormInput('');
+  const lastName = useFormInput('');
+  const phone = useFormInput('');
+  const yearsOfExperience = useFormInput('');
+  const appointmentPrice = useFormInput('');
+  const address = useFormInput('');
+  
+  const handleCreateDoctor = () => {
+    axios.post("http://localhost:5001/api/employees/doctors", {
+      request: {
+        dateOfBirth: dateOfBirth.value,
+        iin: iin.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
+        phone: phone.value,
+        yearsOfExperience: yearsOfExperience.value,
+        appointmentPrice: appointmentPrice.value,
+        address: address.value
+      }
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + getToken(),
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  }
+  
   return (
    <Form>
     <FormGroup>
       <Label>Date of Birth</Label>
-      <Input type="date" placeholder='Date of birth'></Input>
-      <Label>INN</Label>
-      <Input type="text" placeholder='INN'></Input>
-      <Label>ID number</Label>
-      <Input type="text" placeholder='IDnumber'></Input>
+      <Input type="date" {...dateOfBirth} placeholder='Date of birth'></Input>
+      <Label>IIN</Label>
+      <Input type="text" {...iin} placeholder='IIN'></Input>
       <Label>Name</Label>
-      <Input type="text" placeholder='Name'></Input>
-      <Label>Surname</Label>
-      <Input type="text" placeholder='Surname'></Input>
-      <Label>Contact numbet</Label>
-      <Input type="number" placeholder='without +'></Input>
-      <Label>Department Id</Label>
-      <Input type="text" placeholder=' '></Input>
-      <Label>Specialization Id</Label>
-      <Input type="text" placeholder=' '></Input>
+      <Input type="text" {...firstName} placeholder='Name'></Input>
+      <Label>Lastname</Label>
+      <Input type="text" {...lastName} placeholder='Surname'></Input>
+      <Label>Contact number</Label>
+      <Input type="text" {...phone} placeholder='without +'></Input>
       <Label>Experience in years</Label>
-      <Input type="number" placeholder='just number '></Input>
-      <Label>Photo</Label>
-      <Input type="image" ></Input>
-      <Label>Category</Label>
-      <Input type="text" placeholder='Highest, First, ...'></Input>
+      <Input type="number" {...yearsOfExperience} placeholder='just number '></Input>
       <Label>Price of appointment</Label>
-      <Input type="number" placeholder='$'></Input>
-      <Label>Schedule details</Label>
-      <Input type="text" placeholder='Address'></Input>
-      <Label>Degree/education</Label>
-      <Input type="text" placeholder='MD, PhD, etc'></Input>
-      <Label>Rating</Label>
-      <Input type="number" placeholder='from 0 to 10'></Input>
+      <Input type="number" {...appointmentPrice} placeholder='$'></Input>
       <Label>Address</Label>
-      <Input type="text" placeholder='Address'></Input>
-      <Label>Homepage URL</Label>
-      <Input type="url" placeholder='any details about patient'></Input>
+      <Input type="text" {...address} placeholder='Address'></Input>
     </FormGroup>
-    <Button type="submit"> Submit</Button>
+    <Button type="submit" onClick={alert(666)}> Add Doctor </Button>
     <Link to ="/" className='btn btn-danger'>Cancel</Link>
    </Form>
   );

@@ -74,9 +74,10 @@ public class UserService : IUserService
         return new AuthResultDto(
             true,
             string.Empty,
-            user.UserId!.Value,
-            $"{user.FirstName} {user.LastName}",
-            user.Roles!.Select(role => new NameDtoInt(role.Id, role.Name)).ToArray(),
+            new UserResultDto(
+                user.UserId!.Value,
+                $"{user.FirstName} {user.LastName}",
+                user.Roles!.Select(role => new NameDtoInt(role.Id, role.Name)).ToArray()),
             accessToken,
             refreshToken);
     }
