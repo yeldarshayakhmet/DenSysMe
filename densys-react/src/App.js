@@ -7,11 +7,15 @@ import Dashboard from './Dashboard';
 import Home from './Home';
 import Doctor from './components/Doctor/Doctor';
 import Patient from './components/Patient/Patient';
-import Request from './Request';
+
 import AddPatient from './components/Patient/AddPatient';
 import EditPatient from './components/Patient/EditPatient';
 import AddDoctor from './components/Doctor/AddDoctor';
 import EditDoctor from './components/Doctor/EditDoctor';
+import GetDoctor from './components/Doctor/getDoctor';
+import BookAppointment from './components/Patient/bookAppointment';
+
+
 
 import PrivateRoute from './Utils/PrivateRoute';
 import PublicRoute from './Utils/PublicRoute';
@@ -19,7 +23,7 @@ import { getToken, removeUserSession, setUserSession } from './Utils/Common';
 
 
 function App() {
-  const [authLoading, setAuthLoading] = useState(true);
+/*  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     const token = getToken();
@@ -39,18 +43,18 @@ function App() {
   if (authLoading && getToken()) {
     return <div className="content">Checking Authentication...</div>
   }
-
+*/
   return (
     <div className="App">
       <BrowserRouter>
         <div>
           <div className="header">
             <NavLink exact activeClassName="active" to="/">Home</NavLink>
-            <NavLink activeClassName="active" to="/login">Login</NavLink><small>(Access without token only)</small>
-            <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink><small>(Access with token only)</small>
+            <NavLink activeClassName="active" to="/login">Login</NavLink>
+            <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink>
             <NavLink exact activeClassName="active" to="/doctor">Doctor</NavLink>
             <NavLink exact activeClassName="active" to="/patient">Patient</NavLink>
-            <NavLink exact activeClassName="active" to="/request">Request</NavLink>
+            <NavLink exact activeClassName="active" to="/getdoctor">Request</NavLink>
           </div>
           <div className="content">
             <Switch>
@@ -64,8 +68,10 @@ function App() {
               <Route exact path="/editpatient/:iin" component={EditPatient} />
               <Route exact path="/adddoctor" component={AddDoctor} />
               <Route exact path="/editdoctor/:iin" component={EditDoctor} />
-              <Route exact path="/request" component={Request} />
+              <Route exact path ="/bookAppointment" component={BookAppointment} />
+              <Route exact path ="/getdoctor" component={GetDoctor} />
 
+  
             </Switch>
           </div>
         </div>

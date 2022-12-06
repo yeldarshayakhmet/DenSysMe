@@ -26,7 +26,7 @@ const Patient = () => {
               </div>
               <div className="card-body">
                   <div className="divbtn">
-                  <Link to = "/adddoctor" className="btn btn-primary"> Add new Patient (+)</Link>
+                  <Link to = "/addpatient" className="btn btn-primary"> Add new Patient (+)</Link>
                   </div>
                   <table className="table table-bordered">
                       <thead className="bg-dark text-white">

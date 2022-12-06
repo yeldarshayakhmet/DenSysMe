@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
-class Doctor extends React.Component {
+class GetDoctor extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -50,19 +50,20 @@ class Doctor extends React.Component {
 		return (
 			<div>
 					<Nav tabs>
+						
 						<NavItem>
-							<NavLink>
-								<Link to="/adddoctor">
-									Add Doctor
+							<NavLink active>
+								<Link to="/getdoctor">
+									Doctor List
 								</Link>
 							</NavLink>
 						</NavItem>
 						<NavItem>
-							<NavLink active>
-								<Link to="/doctor">
-									Doctor List
-								</Link>
-							</NavLink>
+						<NavLink >
+							<Link to="/bookAppointment">
+								Book Appointment
+							</Link>
+						</NavLink>
 						</NavItem>
 					</Nav>
 				<Row>
@@ -150,4 +151,4 @@ class Doctor extends React.Component {
 	}
 }
 
-export default Doctor;
+export default GetDoctor;
