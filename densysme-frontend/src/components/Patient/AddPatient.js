@@ -1,26 +1,24 @@
-
 import React from 'react';
 import {Form, FormGroup, Label, Input, Button, Row, Col, Nav, NavItem, NavLink } from 'reactstrap';
 import {Link} from 'react-router-dom';
-
 
 function AddPatient() {
   return (
     <div>
       <Nav tabs>
-					<NavItem>
-						<NavLink active>
-							<Link to="/addPatient">Add Patient</Link>
-						</NavLink>
-					</NavItem>
-					<NavItem>
-						<NavLink>
-							<Link to="/patientlist">
-								Patient List
-							</Link>
-						</NavLink>
-					</NavItem>
-				</Nav>
+        <NavItem>
+            <NavLink active>
+                <Link to="/addPatient">Add Patient</Link>
+            </NavLink>
+        </NavItem>
+        <NavItem>
+            <NavLink>
+                <Link to="/patientlist">
+                    Patient List
+                </Link>
+            </NavLink>
+        </NavItem>
+      </Nav>
 
    <Form >
     <FormGroup>

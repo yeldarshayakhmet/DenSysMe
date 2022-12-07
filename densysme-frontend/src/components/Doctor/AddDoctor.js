@@ -1,5 +1,6 @@
 import React from 'react';
 import {api, getToken} from "../../Utils/Common";
+import {Form, Input, Label} from "reactstrap";
 
 class AddDoctor extends React.Component {
     constructor(props) {
@@ -75,10 +76,10 @@ class AddDoctor extends React.Component {
     }*/
     render() {
         return (
-            <form onSubmit={this.createDoctor}>
+            <Form onSubmit={this.createDoctor}>
                 <div>
-                    <label>IIN</label>
-                    <input
+                    <Label>IIN</Label>
+                    <Input
                         type="text"
                         value={this.state.iin}
                         onChange={event => {
@@ -87,8 +88,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>FirstName</label>
-                    <input
+                    <Label>FirstName</Label>
+                    <Input
                         type="text"
                         value={this.state.firstName}
                         onChange={event => {
@@ -97,8 +98,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>LastName</label>
-                    <input
+                    <Label>LastName</Label>
+                    <Input
                         type="text"
                         value={this.state.lastName}
                         onChange={event => {
@@ -107,8 +108,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>MiddleName</label>
-                    <input
+                    <Label>MiddleName</Label>
+                    <Input
                         type="text"
                         value={this.state.middleName}
                         onChange={event => {
@@ -117,8 +118,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Date Of Birth</label>
-                    <input
+                    <Label>Date Of Birth</Label>
+                    <Input
                         type="date"
                         value={this.state.dateOfBirth}
                         onChange={event => {
@@ -127,8 +128,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Phone</label>
-                    <input
+                    <Label>Phone</Label>
+                    <Input
                         type="text"
                         value={this.state.phone}
                         onChange={event => {
@@ -137,8 +138,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Email</label>
-                    <input
+                    <Label>Email</Label>
+                    <Input
                         type="text"
                         value={this.state.email}
                         onChange={event => {
@@ -147,8 +148,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Years Of Experience</label>
-                    <input
+                    <Label>Years Of Experience</Label>
+                    <Input
                         type="number"
                         value={this.state.yearsOfExperience}
                         onChange={event => {
@@ -157,8 +158,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Appointment Price</label>
-                    <input
+                    <Label>Appointment Price</Label>
+                    <Input
                         type="number"
                         value={this.state.appointmentPrice}
                         onChange={event => {
@@ -167,8 +168,8 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Address</label>
-                    <input
+                    <Label>Address</Label>
+                    <Input
                         type="text"
                         value={this.state.address}
                         onChange={event => {
@@ -177,7 +178,7 @@ class AddDoctor extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Degree</label>
+                    <Label> Degree</Label>
                     <select value={this.state.degree} onChange={event => { this.setState({degree: parseInt(event.target.value)}) }}>
                         <option value = {1}>MD</option>
                         <option value = {2}>PhD</option>
@@ -186,7 +187,7 @@ class AddDoctor extends React.Component {
                     </select>
                 </div>
                 <div>
-                    <label>Category</label>
+                    <Label> Category</Label>
                     <select value={this.state.category} onChange={event => { this.setState({category: parseInt(event.target.value)}) }}>
                         <option value = {1}>First</option>
                         <option value = {2}>Second</option>
@@ -195,47 +196,23 @@ class AddDoctor extends React.Component {
                     </select>
                 </div>
                 <div>
-                    <label>Specialization</label>
+                    <Label> Specialization</Label>
                     <select value = {this.state.specializationId} onChange={event => { this.setState({ specializationId: event.target.value }) }}> {
                             this.state.specializations.map(spec => <option key={spec.id} value = {spec.id}>{spec.name}</option>)
                         }
                     </select>
                 </div>
                 <div>
-                    <label>Photo</label>
-                    <input
+                    <Label>Photo</Label>
+                    <Input
                         type="file"
                         id="photo"
                         accept="image/jpeg"
                     />
                 </div>
                 <button type="submit">Create</button>
-            </form>
+            </Form>
         );
-        /*return(
-        <Form>
-        <FormGroup>
-          <Label>Date of Birth</Label>
-          <Input type="date" {...dateOfBirth} placeholder='Date of birth'></Input>
-          <Label>IIN</Label>
-          <Input type="text" {...iin} placeholder='IIN'></Input>
-          <Label>Name</Label>
-          <Input type="text" {...firstName} placeholder='Name'></Input>
-          <Label>Lastname</Label>
-          <Input type="text" {...lastName} placeholder='Surname'></Input>
-          <Label>Contact number</Label>
-          <Input type="text" {...phone} placeholder='without +'></Input>
-          <Label>Experience in years</Label>
-          <Input type="number" {...yearsOfExperience} placeholder='just number '></Input>
-          <Label>Price of appointment</Label>
-          <Input type="number" {...appointmentPrice} placeholder='$'></Input>
-          <Label>Address</Label>
-          <Input type="text" {...address} placeholder='Address'></Input>
-        </FormGroup>
-        <Button type="submit" onClick={handleCreateDoctor}> Add Doctor </Button>
-        <Link to="/" className='btn btn-danger'>Cancel</Link>
-        </Form>);
-    }*/
     }
 }
 

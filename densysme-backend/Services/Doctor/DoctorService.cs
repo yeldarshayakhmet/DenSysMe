@@ -65,8 +65,8 @@ public class DoctorService : IDoctorService
         .Include(doctor => doctor.Specialization)
         .AsNoTracking()
         .Where(doctor => string.IsNullOrWhiteSpace(search)
-            && (EF.Functions.Like(doctor.FirstName, $"%{search}%")
-                || EF.Functions.Like(doctor.LastName, $"%{search}%")))
+            || EF.Functions.Like(doctor.FirstName, $"%{search}%") 
+            || EF.Functions.Like(doctor.LastName, $"%{search}%"))
         .Where(doctor =>
             specializations == null
             || !specializations.Any()
