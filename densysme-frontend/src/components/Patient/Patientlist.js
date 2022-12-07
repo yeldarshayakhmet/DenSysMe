@@ -86,6 +86,7 @@ class Patientlist extends React.Component {
 								this.setState({ searchTerm: e.target.value })
 							}
 						/>
+						<Button type="button" style={{ width:"50%"}} onClick={this.getDoctors}>Search</Button>
 						<Table
 							striped
 							style={{

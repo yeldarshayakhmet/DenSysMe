@@ -66,61 +66,43 @@ class DoctorsList extends React.Component {
 						</NavItem>
 						
 					</Nav>
+				
 				<Row>
-					<Col className="mt-2 mr-5" sm="3">
-						{" "}
-					</Col>
+					<Col className="mt-2 mr-5" sm="3">{" "}</Col>
 					<Col className="mt-3">
 						<Input
-							style={{ width: "60%" }}
+							style={{ width: "50%" }}
 							placeholder="Search..."
 							type="text"
-							onChange={(e) =>
-								this.setState({ searchTerm: e.target.value })
-							}
-						/>
+							onChange={event => { this.setState({ searchTerm: event.target.value })} }
+						/> <Button type="button" style={{ width:"50%"}} onClick={this.getDoctors}>Search</Button>
 						<Table
 							striped
 							style={{
-								width: "60%",
+								width: "50%",
 								"box-shadow": "2px 2px 4px 4px #CCCCCC",
 								marginTop: "30px",
 							}}
 						>
 							<thead>
 								<tr>
-									<th>Doctor Id</th>
-									<th>Doctor Name</th>
-									<th>Department</th>
+									<th>Name</th>
+									<th>Phone</th>
 									<th>Specialization</th>
-									<th>Schedule</th>
+									<th>Experience</th>
+									<th>Appointment Price</th>
 								</tr>
 							</thead>
 							<tbody>
-								{typeof this.state.doctors != undefined ? (
-									this.state.doctors
-										.filter((doctor, index) => {
-											if (this.state.searchTerm === "") {
-												return doctor;
-											} else if (
-												doctor.Name.toLowerCase().includes(
-													this.state.searchTerm.toLowerCase()
-												)
-											) {
-												return doctor;
-											}
-										})
-										.map((doctor, index) => {
-											return (
-												<tr>
-													<th scope="row">
-														{doctor.Id}
-													</th>
-													<td>{doctor.Name}</td>
-													<td>{doctor.Department}</td>
-													<td>{doctor.Specialization}</td>
-													<td>{doctor.Schedule}</td>
-													{this.props.msg ? (
+								{this.state.doctors.map(doctor =>
+									<tr key={doctor.id}>
+										<td>{doctor.firstName + ' ' + doctor.lastName}</td>
+										<td>{doctor.phoneNumber}</td>
+										<td>{doctor.specialization && doctor.specialization.name}</td>
+										<td>{doctor.yearsOfExperience}</td>
+										<td>{doctor.appointmentPrice}</td>
+										<td>
+										{this.props.msg ? (
 														<h1></h1>
 													) : (
 														<td>
@@ -138,11 +120,8 @@ class DoctorsList extends React.Component {
 															</Button>
 														</td>
 													)}
-												</tr>
-											);
-										})
-								) : (
-									<h1>ok</h1>
+										</td>
+									</tr>
 								)}
 							</tbody>
 						</Table>
