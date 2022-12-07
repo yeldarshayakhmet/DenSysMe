@@ -7,11 +7,16 @@ import Dashboard from './Dashboard';
 import Home from './Home';
 import Doctor from './components/Doctor/Doctor';
 import Patient from './components/Patient/Patient';
-import Request from './Request';
+
 import AddPatient from './components/Patient/AddPatient';
 import EditPatient from './components/Patient/EditPatient';
 import AddDoctor from './components/Doctor/AddDoctor';
 import EditDoctor from './components/Doctor/EditDoctor';
+import GetDoctor from './components/Doctor/getDoctor';
+import BookAppointment from './components/Patient/bookAppointment';
+import Patientlist from './components/Patient/Patientlist';
+
+
 
 import PrivateRoute from './Utils/PrivateRoute';
 import PublicRoute from './Utils/PublicRoute';
@@ -46,11 +51,12 @@ function App() {
         <div>
           <div className="header">
             <NavLink exact activeClassName="active" to="/">Home</NavLink>
-            <NavLink activeClassName="active" to="/login">Login</NavLink><small>(Access without token only)</small>
-            <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink><small>(Access with token only)</small>
+            <NavLink activeClassName="active" to="/login">Login</NavLink>
+            <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink>
             <NavLink exact activeClassName="active" to="/doctor">Doctor</NavLink>
-            <NavLink exact activeClassName="active" to="/patient">Patient</NavLink>
-            <NavLink exact activeClassName="active" to="/request">Request</NavLink>
+            <NavLink exact activeClassName="active" to="/patientlist">Patient</NavLink>
+            <NavLink exact activeClassName="active" to="/getdoctor">Request</NavLink>
+            <NavLink exact activeClassName="active" to="/patient"></NavLink>
           </div>
           <div className="content">
             <Switch>
@@ -64,8 +70,11 @@ function App() {
               <Route exact path="/editpatient/:iin" component={EditPatient} />
               <Route exact path="/adddoctor" component={AddDoctor} />
               <Route exact path="/editdoctor/:iin" component={EditDoctor} />
-              <Route exact path="/request" component={Request} />
+              <Route exact path ="/bookAppointment" component={BookAppointment} />
+              <Route exact path ="/getdoctor" component={GetDoctor} />
+              <Route exact path='/patientlist' component={Patientlist}/>
 
+  
             </Switch>
           </div>
         </div>

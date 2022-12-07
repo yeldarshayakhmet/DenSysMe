@@ -1,11 +1,27 @@
 
 import React from 'react';
-import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import {Form, FormGroup, Label, Input, Button, Row, Col, Nav, NavItem, NavLink } from 'reactstrap';
 import {Link} from 'react-router-dom';
 
 
 function AddPatient() {
   return (
+    <div>
+      <Nav tabs>
+					<NavItem>
+						<NavLink active>
+							<Link to="/addPatient">Add Patient</Link>
+						</NavLink>
+					</NavItem>
+					<NavItem>
+						<NavLink>
+							<Link to="/patientlist">
+								Patient List
+							</Link>
+						</NavLink>
+					</NavItem>
+				</Nav>
+
    <Form >
     <FormGroup>
       <Label>Date of Birth</Label>
@@ -36,8 +52,8 @@ function AddPatient() {
       <Input type="text" placeholder='any details about patient'></Input>
     </FormGroup>
     <Button type="submit"> Submit</Button>
-    <Link to ="/" className='btn btn-danger'>Cancel</Link>
    </Form>
+   </div>
   );
 }
 

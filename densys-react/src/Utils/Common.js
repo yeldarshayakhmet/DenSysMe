@@ -36,7 +36,10 @@ export const useFormInput = initialValue => {
     onChange: handleChange
   }
 }
+<<<<<<< HEAD
 
 export const api = axios.create({
   baseURL: 'http://localhost:5001/api/'
 })
+=======
+>>>>>>> refs/remotes/origin/main

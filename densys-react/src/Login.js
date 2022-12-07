@@ -30,7 +30,10 @@ function Login(props) {
 
   return (
     <div className ="log">
-      Login<br /><br />
+      <h3>
+      Login
+      </h3>
+    <br />
       <div>
         Username<br />
         <input type="text" {...iin} autoComplete="new-password" />
