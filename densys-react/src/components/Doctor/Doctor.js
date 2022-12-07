@@ -123,6 +123,19 @@ class Doctor extends React.Component {
 														<td>
 															<Button
 																id={doctor.Id}
+																color="primary"
+																onClick={(e) =>
+																	this.handleDelete(
+																		e.target
+																			.id
+																	)
+																}
+															>
+																Delete
+															</Button>
+															
+															<Button
+																id={doctor.Id}
 																color="danger"
 																onClick={(e) =>
 																	this.handleDelete(

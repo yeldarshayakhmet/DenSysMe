@@ -51,12 +51,12 @@ function AddDoctor() {
     <Nav tabs>
 					<NavItem>
 						<NavLink active>
-							<Link to="/adminLogin/addDoctor">Add Doctor</Link>
+							<Link to="/addDoctor">Add Doctor</Link>
 						</NavLink>
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link to="/adminLogin/doctorList">Doctor List</Link>
+							<Link to="/doctor">Doctor List</Link>
 						</NavLink>
 					</NavItem>
 				</Nav>

@@ -72,7 +72,7 @@ class GetDoctor extends React.Component {
 					</Col>
 					<Col className="mt-3">
 						<Input
-							style={{ width: "50%" }}
+							style={{ width: "60%" }}
 							placeholder="Search..."
 							type="text"
 							onChange={(e) =>
@@ -82,7 +82,7 @@ class GetDoctor extends React.Component {
 						<Table
 							striped
 							style={{
-								width: "50%",
+								width: "60%",
 								"box-shadow": "2px 2px 4px 4px #CCCCCC",
 								marginTop: "30px",
 							}}
@@ -93,6 +93,7 @@ class GetDoctor extends React.Component {
 									<th>Doctor Name</th>
 									<th>Department</th>
 									<th>Specialization</th>
+									<th>Schedule</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -118,6 +119,7 @@ class GetDoctor extends React.Component {
 													<td>{doctor.Name}</td>
 													<td>{doctor.Department}</td>
 													<td>{doctor.Specialization}</td>
+													<td>{doctor.Schedule}</td>
 													{this.props.msg ? (
 														<h1></h1>
 													) : (

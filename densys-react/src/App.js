@@ -14,6 +14,7 @@ import AddDoctor from './components/Doctor/AddDoctor';
 import EditDoctor from './components/Doctor/EditDoctor';
 import GetDoctor from './components/Doctor/getDoctor';
 import BookAppointment from './components/Patient/bookAppointment';
+import Patientlist from './components/Patient/Patientlist';
 
 
 
@@ -53,8 +54,9 @@ function App() {
             <NavLink activeClassName="active" to="/login">Login</NavLink>
             <NavLink activeClassName="active" to="/dashboard">Dashboard</NavLink>
             <NavLink exact activeClassName="active" to="/doctor">Doctor</NavLink>
-            <NavLink exact activeClassName="active" to="/patient">Patient</NavLink>
+            <NavLink exact activeClassName="active" to="/patientlist">Patient</NavLink>
             <NavLink exact activeClassName="active" to="/getdoctor">Request</NavLink>
+            <NavLink exact activeClassName="active" to="/patient"></NavLink>
           </div>
           <div className="content">
             <Switch>
@@ -70,6 +72,7 @@ function App() {
               <Route exact path="/editdoctor/:iin" component={EditDoctor} />
               <Route exact path ="/bookAppointment" component={BookAppointment} />
               <Route exact path ="/getdoctor" component={GetDoctor} />
+              <Route exact path='/patientlist' component={Patientlist}/>
 
   
             </Switch>

@@ -15,7 +15,7 @@ function AddPatient() {
 					</NavItem>
 					<NavItem>
 						<NavLink>
-							<Link to="/patient">
+							<Link to="/patientlist">
 								Patient List
 							</Link>
 						</NavLink>
