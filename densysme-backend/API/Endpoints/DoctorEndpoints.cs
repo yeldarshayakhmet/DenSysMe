@@ -2,7 +2,6 @@ using System.Text.Json;
 using Core.Constants;
 using Core.DataTransfer.Doctor;
 using Core.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Services.Doctor;
 using static API.Endpoints.RouteConstants;
 using AddDoctorRequest = Core.DataTransfer.Doctor.AddDoctorRequest;
@@ -89,8 +88,11 @@ public static class DoctorEndpoints
         return Results.Accepted();
     }
 
-    public static async Task<IResult> HandleGetDoctors(IDoctorService doctorService, string? search = null, [FromBody] Guid[]? specializations = null)
+    public static async Task<IResult> HandleGetDoctors(IDoctorService doctorService, IHttpContextAccessor httpContext, string? search = null)
     {
+        var specializations = !string.IsNullOrWhiteSpace(httpContext.HttpContext!.Request.Query["specializations"])
+            ? httpContext.HttpContext.Request.Query["specializations"].ToArray().Select(Guid.Parse).ToArray()
+            : null;
         var doctors = await doctorService.GetDoctorsAsync(search, specializations);
         return Results.Ok(doctors);
     }

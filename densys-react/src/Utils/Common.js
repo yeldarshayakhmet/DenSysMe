@@ -1,5 +1,6 @@
 // return the user data from the session storage
 import {useState} from "react";
+import axios from 'axios'
 
 export const getUser = () => {
   const userStr = sessionStorage.getItem('user');
@@ -35,3 +36,7 @@ export const useFormInput = initialValue => {
     onChange: handleChange
   }
 }
+
+export const api = axios.create({
+  baseURL: 'http://localhost:5001/api/'
+})

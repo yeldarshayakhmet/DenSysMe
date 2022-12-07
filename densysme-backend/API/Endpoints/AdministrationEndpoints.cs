@@ -20,6 +20,8 @@ public static class AdministrationEndpoints
                 })
             .RequireAuthorization(new AuthorizeData(AuthRoleConstants.Admin));
         app.MapPost($"{Api}/{Employees}", HandleAddManager).RequireAuthorization(new AuthorizeData(roles: AuthRoleConstants.Admin));
+        app.MapGet($"{Api}/specializations", async (IAdministrationService administrationService) => Results.Ok(await administrationService.GetSpecializations()))
+            .RequireAuthorization();
         return app;
     }
 

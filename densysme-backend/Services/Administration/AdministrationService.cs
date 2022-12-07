@@ -77,4 +77,6 @@ public class AdministrationService : IAdministrationService
         await _unitOfWork.SaveAsync();
         return manager.Id;
     }
+
+    public async Task<Specialization[]> GetSpecializations() => await _unitOfWork.Collection<Specialization>().ToArrayAsync();
 }
