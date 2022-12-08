@@ -55,7 +55,6 @@ class GetDoctor extends React.Component {
 		return (
 			<div>
 				<Nav tabs>
-					
 					<NavItem>
 						<NavLink active>
 							<Link to="/getdoctor">
@@ -69,11 +68,11 @@ class GetDoctor extends React.Component {
 					<Col className="mt-2 mr-5" sm="3">{" "}</Col>
 					<Col className="mt-3">
 						<Input
-							style={{ width: "50%" }}
+							style={{ width: "66%" }}
 							placeholder="Search..."
 							type="text"
 							onChange={event => { this.setState({ searchTerm: event.target.value })} }
-						/> <Button type="button" style={{ width:"50%"}} onClick={this.getDoctors}>Search</Button>
+						/> <Button type="button" style={{ width:"66%"}} onClick={this.getDoctors}>Search</Button>
 						<Table
 							striped
 							style={{
@@ -84,6 +83,7 @@ class GetDoctor extends React.Component {
 						>
 							<thead>
 								<tr>
+									<th>Photo</th>
 									<th>Name</th>
 									<th>Phone</th>
 									<th>Specialization</th>
@@ -94,6 +94,7 @@ class GetDoctor extends React.Component {
 							<tbody>
 								{this.state.doctors.map(doctor =>
 									<tr key={doctor.id}>
+										<td><img src={"data:image/jpeg;base64," + doctor.photo} alt="kekw" width="100px"/></td>
 										<td>{doctor.firstName + ' ' + doctor.lastName}</td>
 										<td>{doctor.phoneNumber}</td>
 										<td>{doctor.specialization && doctor.specialization.name}</td>
@@ -104,7 +105,7 @@ class GetDoctor extends React.Component {
 												pathname: "/bookAppointment/:doctorId",
 												doctorId: doctor.id
 											}}>
-												Book Appointment
+												+Appointment
 											</Link>
 										</td>
 									</tr>

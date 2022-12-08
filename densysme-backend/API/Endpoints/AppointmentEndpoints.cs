@@ -1,3 +1,4 @@
+using Core.Constants;
 using Core.DataTransfer.Appointment;
 using Services.Appointment;
 using static API.Endpoints.RouteConstants;
@@ -14,7 +15,7 @@ public static class AppointmentEndpoints
         app.MapGet($"{Api}/doctors/appointments",
             async (IAppointmentService appointmentService, Guid doctorId) =>
                 await appointmentService.GetAppointmentsByDoctor(doctorId))
-            .RequireAuthorization();
+            .RequireAuthorization(new AuthorizeData(roles: AuthRoleConstants.Admin));
         app.MapGet($"{Api}/patients/appointments",
             async (IAppointmentService appointmentService, Guid patientId) =>
                 await appointmentService.GetAppointmentsByPatient(patientId))
